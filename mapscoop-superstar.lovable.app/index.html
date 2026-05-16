@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/styles-ClxwIWkj.css" data-precedence="default"/><link rel="stylesheet" href="../fonts.googleapis.com/css2%3Ffamily=Unbounded:wght@400%3B600%3B700%3B800&amp;family=Inter:wght@400%3B500%3B600%3B700&amp;family=JetBrains+Mono:wght@400%3B500&amp;display=swap.css" data-precedence="default"/><title>Ya Maps Parser — парсер организаций с Яндекс Карт в XLSX</title><meta name="description" content="Расширение Chrome для сбора контактов компаний с Яндекс Карт: телефоны, сайты, соцсети, адреса. Выгрузка в Excel за секунды."/><meta name="author" content="Ya Maps Parser"/><meta property="og:title" content="Ya Maps Parser — парсер организаций с Яндекс Карт в XLSX"/><meta property="og:description" content="Расширение Chrome для сбора контактов компаний с Яндекс Карт: телефоны, сайты, соцсети, адреса. Выгрузка в Excel за секунды."/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@Lovable"/><meta name="twitter:title" content="Ya Maps Parser — парсер организаций с Яндекс Карт в XLSX"/><meta name="twitter:description" content="Расширение Chrome для сбора контактов компаний с Яндекс Карт: телефоны, сайты, соцсети, адреса. Выгрузка в Excel за секунды."/><meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/abc47c7e-0518-4e7d-a24f-eda07c9bb879/id-preview-710e4303--70e971bb-daa0-44c1-85c1-30b3713bddfd.lovable.app-1778878490027.png"/><meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/abc47c7e-0518-4e7d-a24f-eda07c9bb879/id-preview-710e4303--70e971bb-daa0-44c1-85c1-30b3713bddfd.lovable.app-1778878490027.png"/><link rel="modulepreload" href="assets/index-BpgACoxl.js"/><link rel="modulepreload" href="assets/index-NgrRrb23.js"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+<style>
+	@font-face {
+		font-family: 'CameraPlainVariable';
+		src: url('../cdn.gpteng.co/mcp-widgets/v1/fonts/CameraPlainVariable.woff2') format('woff2');
+		font-weight: 100 900;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+		
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg);
+		color: var(--badge-text);
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow);
+		font-size: 12px;
+		font-family: CameraPlainVariable, "CameraPlainVariable Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+	}
+
+	#lovable-badge-cta {
+		display: flex;
+		align-items: center;
+		gap: var(--badge-gap);
+		padding: 0 var(--badge-padding);
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
+
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
+
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
+
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
+
+	#lovable-badge-text {
+		line-height: 1;
+	}
+
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
+
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
+
+	#lovable-badge-close:focus {
+		outline: none;
+	}
+
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
+
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
+
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+		
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+		
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
+</style>
+<script defer src="~flock.js" data-proxy-url="/~api/analytics"></script></head><body><!--$--><main class="min-h-screen bg-background text-foreground overflow-x-hidden"><header class="sticky top-0 z-50 backdrop-blur-md bg-background/70 border-b border-border"><div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4"><a href="index.html#top" class="flex items-center gap-2 font-display font-bold text-lg tracking-tight"><span class="inline-block w-2.5 h-2.5 rounded-sm bg-accent"></span>Ya Maps Parser</a><nav class="hidden md:flex items-center gap-8 text-sm text-muted-foreground"><a href="index.html#features" class="hover:text-foreground transition">Возможности</a><a href="index.html#how" class="hover:text-foreground transition">Как работает</a><a href="index.html#demo" class="hover:text-foreground transition">Демо</a><a href="index.html#pricing" class="hover:text-foreground transition">Тарифы</a><a href="index.html#faq" class="hover:text-foreground transition">FAQ</a></nav><a href="https://chromewebstore.google.com/detail/ya-maps-parser-%E2%80%94-%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80-%D0%BA/aacfjdlinogfkihpmhaagoejofgbnlgd" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-full bg-foreground text-background hover:scale-[1.02] transition">Установить</a></div></header><section id="top" class="relative pt-20 pb-28 md:pt-32 md:pb-40 px-6"><div class="absolute inset-0 grid-bg grid-bg-fade opacity-60 pointer-events-none"></div><div class="relative max-w-6xl mx-auto text-center"><span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-xs font-mono uppercase tracking-wider mb-8 pulse-dot">1000+ пользователей каждую неделю · 5.0 в Chrome Store</span><h1 class="font-display font-bold text-balance text-[clamp(2.5rem,7vw,6rem)] leading-[0.95] tracking-[-0.04em]">Парсите Яндекс Карты <br/>прямо в <span class="underline-signal">Excel</span>.</h1><p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed">Расширение для Chrome, которое собирает телефоны, сайты, соцсети, адреса и координаты организаций — в один клик, без капчи и ручного копирования.</p><div class="mt-10 flex flex-wrap items-center justify-center gap-3"><a href="https://chromewebstore.google.com/detail/ya-maps-parser-%E2%80%94-%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80-%D0%BA/aacfjdlinogfkihpmhaagoejofgbnlgd" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[15px] font-semibold rounded-full transition-all duration-200 whitespace-nowrap bg-foreground text-background hover:scale-[1.02] hover:shadow-[0_8px_30px_-8px_var(--ink)]">Попробовать бесплатно<span aria-hidden="true">→</span></a><a href="index.html#pricing" class="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4">от 1 000 ₽ за расширенные лимиты</a></div><div class="mt-14 flex flex-wrap justify-center gap-x-10 gap-y-3 font-mono text-xs uppercase tracking-widest text-muted-foreground"><span>· Без капчи</span><span>· XLSX за секунды</span><span>· До 10 000 строк</span><span>· Установка в 1 клик</span></div></div></section><div class="border-y border-border bg-card overflow-hidden py-5"><div class="marquee flex whitespace-nowrap gap-16 font-mono text-sm uppercase tracking-widest text-muted-foreground"><div class="flex gap-16 shrink-0"><span>★ Маркетологи</span><span>★ B2B продажи</span><span>★ Курьерские службы</span><span>★ Агентства</span><span>★ Исследователи рынка</span><span>★ Рекрутеры</span><span>★ Франшизы</span><span>★ Стартапы</span></div><div class="flex gap-16 shrink-0"><span>★ Маркетологи</span><span>★ B2B продажи</span><span>★ Курьерские службы</span><span>★ Агентства</span><span>★ Исследователи рынка</span><span>★ Рекрутеры</span><span>★ Франшизы</span><span>★ Стартапы</span></div></div></div><section id="features" class="relative py-24 md:py-32 px-6 "><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">01 — Что собирает</div><div class="grid md:grid-cols-12 gap-6 items-end mb-14"><h2 class="md:col-span-7 font-display font-bold text-4xl md:text-6xl leading-[1] tracking-tight text-balance">Все важные данные<br/>из карточки организации.</h2><p class="md:col-span-5 text-muted-foreground text-lg">Парсер вытягивает то, что обычно пришлось бы копировать вручную — построчно, час за часом.</p></div><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden border border-border"><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">01</div><div class="font-display font-bold text-2xl mb-2">Телефоны</div><p class="text-muted-foreground leading-relaxed">Все номера из карточки, включая мобильные и доп.</p></div><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">02</div><div class="font-display font-bold text-2xl mb-2">Сайт и соцсети</div><p class="text-muted-foreground leading-relaxed">URL, Telegram, WhatsApp, VK, Instagram.</p></div><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">03</div><div class="font-display font-bold text-2xl mb-2">Адрес и координаты</div><p class="text-muted-foreground leading-relaxed">Полный адрес + точные lat/lon для CRM.</p></div><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">04</div><div class="font-display font-bold text-2xl mb-2">Рейтинг и отзывы</div><p class="text-muted-foreground leading-relaxed">Средняя оценка и количество отзывов.</p></div><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">05</div><div class="font-display font-bold text-2xl mb-2">Категория</div><p class="text-muted-foreground leading-relaxed">Отрасль и подкатегории организации.</p></div><div class="bg-card p-8 hover:bg-accent/10 transition group"><div class="font-mono text-xs text-muted-foreground mb-4">06</div><div class="font-display font-bold text-2xl mb-2">Часы работы</div><p class="text-muted-foreground leading-relaxed">Расписание по дням недели.</p></div></div></div></section><section id="how" class="relative py-24 md:py-32 px-6 bg-card border-y border-border"><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">02 — Как это работает</div><h2 class="font-display font-bold text-4xl md:text-6xl mb-16 max-w-3xl text-balance">Три шага. Около минуты на тысячу строк.</h2><div class="grid md:grid-cols-3 gap-8"><div class="relative"><div class="font-mono text-sm text-accent-foreground bg-accent inline-block px-2 py-0.5 rounded mb-4">Шаг <!-- -->01</div><h3 class="font-display font-bold text-2xl md:text-3xl mb-3 leading-tight">Откройте Яндекс Карты</h3><p class="text-muted-foreground leading-relaxed">Введите запрос — «кофейни Москва», «автосервисы Питер» или любой другой.</p></div><div class="relative"><div class="font-mono text-sm text-accent-foreground bg-accent inline-block px-2 py-0.5 rounded mb-4">Шаг <!-- -->02</div><h3 class="font-display font-bold text-2xl md:text-3xl mb-3 leading-tight">Прокрутите список</h3><p class="text-muted-foreground leading-relaxed">Расширение само собирает карточки в фоне, пока вы листаете результаты.</p></div><div class="relative"><div class="font-mono text-sm text-accent-foreground bg-accent inline-block px-2 py-0.5 rounded mb-4">Шаг <!-- -->03</div><h3 class="font-display font-bold text-2xl md:text-3xl mb-3 leading-tight">Скачайте XLSX</h3><p class="text-muted-foreground leading-relaxed">Один клик — и у вас готовая Excel-таблица с контактами и координатами.</p></div></div></div></section><section id="demo" class="relative py-24 md:py-32 px-6 "><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">03 — Что вы получаете</div><div class="grid md:grid-cols-12 gap-6 items-end mb-12"><h2 class="md:col-span-7 font-display font-bold text-4xl md:text-6xl leading-[1] tracking-tight text-balance">Ровно такая таблица. <br/>Прямо в Excel.</h2><p class="md:col-span-5 text-muted-foreground text-lg">Никакой постобработки. Открывайте в Excel, Google Sheets или подключайте к CRM.</p></div><div class="rounded-2xl border border-border bg-card overflow-hidden shadow-[0_24px_60px_-30px_var(--ink)]"><div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary"><span class="w-3 h-3 rounded-full bg-foreground/20"></span><span class="w-3 h-3 rounded-full bg-foreground/20"></span><span class="w-3 h-3 rounded-full bg-accent"></span><span class="ml-3 font-mono text-xs text-muted-foreground">kofeyni-msk.xlsx · 1 248 строк</span></div><div class="overflow-x-auto"><table class="w-full text-sm font-mono"><thead class="bg-secondary/50 text-muted-foreground"><tr><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Название</th><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Телефон</th><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Сайт</th><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Адрес</th><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Рейтинг</th><th class="text-left px-4 py-3 font-medium border-b border-border whitespace-nowrap">Координаты</th></tr></thead><tbody><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">Кофемания</td><td class="px-4 py-3 whitespace-nowrap">+7 495 232-22-44</td><td class="px-4 py-3 whitespace-nowrap">coffeemania.ru</td><td class="px-4 py-3 whitespace-nowrap">ул. Тверская, 12</td><td class="px-4 py-3 whitespace-nowrap">4.7</td><td class="px-4 py-3 whitespace-nowrap">55.7642, 37.6053</td></tr><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">Surf Coffee</td><td class="px-4 py-3 whitespace-nowrap">+7 499 110-55-32</td><td class="px-4 py-3 whitespace-nowrap">surfcoffee.ru</td><td class="px-4 py-3 whitespace-nowrap">Б. Никитская, 18</td><td class="px-4 py-3 whitespace-nowrap">4.8</td><td class="px-4 py-3 whitespace-nowrap">55.7570, 37.6041</td></tr><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">Skuratov Coffee</td><td class="px-4 py-3 whitespace-nowrap">+7 495 480-71-12</td><td class="px-4 py-3 whitespace-nowrap">skuratovcoffee.ru</td><td class="px-4 py-3 whitespace-nowrap">Маросейка, 6/8</td><td class="px-4 py-3 whitespace-nowrap">4.9</td><td class="px-4 py-3 whitespace-nowrap">55.7569, 37.6346</td></tr><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">Double B</td><td class="px-4 py-3 whitespace-nowrap">+7 495 543-89-21</td><td class="px-4 py-3 whitespace-nowrap">double-b.ru</td><td class="px-4 py-3 whitespace-nowrap">Покровка, 15</td><td class="px-4 py-3 whitespace-nowrap">4.6</td><td class="px-4 py-3 whitespace-nowrap">55.7607, 37.6478</td></tr><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">Cofix</td><td class="px-4 py-3 whitespace-nowrap">+7 495 988-22-11</td><td class="px-4 py-3 whitespace-nowrap">cofix.com</td><td class="px-4 py-3 whitespace-nowrap">Тверская, 4</td><td class="px-4 py-3 whitespace-nowrap">4.3</td><td class="px-4 py-3 whitespace-nowrap">55.7615, 37.6111</td></tr><tr class="hover:bg-accent/10 border-b border-border last:border-0"><td class="px-4 py-3 whitespace-nowrap">One Price Coffee</td><td class="px-4 py-3 whitespace-nowrap">+7 495 374-12-09</td><td class="px-4 py-3 whitespace-nowrap">onepricecoffee.ru</td><td class="px-4 py-3 whitespace-nowrap">Арбат, 24</td><td class="px-4 py-3 whitespace-nowrap">4.5</td><td class="px-4 py-3 whitespace-nowrap">55.7497, 37.5916</td></tr></tbody></table></div></div></div></section><section class="relative py-24 md:py-32 px-6 bg-foreground text-background"><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">04 — Цифры</div><div class="grid md:grid-cols-4 gap-12"><div class="border-t border-background/20 pt-6"><div class="font-display font-bold text-5xl md:text-6xl mb-3 tracking-tight">1 000+</div><div class="text-sm uppercase tracking-widest text-background/60 font-mono">пользователей в неделю</div></div><div class="border-t border-background/20 pt-6"><div class="font-display font-bold text-5xl md:text-6xl mb-3 tracking-tight">10 000</div><div class="text-sm uppercase tracking-widest text-background/60 font-mono">строк за один заход</div></div><div class="border-t border-background/20 pt-6"><div class="font-display font-bold text-5xl md:text-6xl mb-3 tracking-tight">0</div><div class="text-sm uppercase tracking-widest text-background/60 font-mono">капчи и ручного копирования</div></div><div class="border-t border-background/20 pt-6"><div class="font-display font-bold text-5xl md:text-6xl mb-3 tracking-tight">5.0★</div><div class="text-sm uppercase tracking-widest text-background/60 font-mono">оценка в Chrome Web Store</div></div></div></div></section><section id="pricing" class="relative py-24 md:py-32 px-6 "><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">05 — Тарифы</div><div class="text-center mb-16"><h2 class="font-display font-bold text-4xl md:text-6xl mb-6 text-balance">Попробуйте бесплатно. <br/>Расширьте лимит, когда будет нужно.</h2><p class="text-muted-foreground text-lg max-w-2xl mx-auto">Демо-доступ — навсегда. Платите только за объём, когда расширение действительно полезно.</p></div><div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto"><div class="rounded-2xl border border-border bg-card p-10"><div class="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6">Демо</div><div class="font-display font-bold text-5xl mb-2">0 ₽</div><div class="text-muted-foreground mb-8">навсегда</div><ul class="space-y-3 text-sm mb-10"><li class="flex gap-3"><span class="text-accent-foreground bg-accent w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>До 15 строк в одной таблице</li><li class="flex gap-3"><span class="text-accent-foreground bg-accent w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Все поля и колонки</li><li class="flex gap-3"><span class="text-accent-foreground bg-accent w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Экспорт в XLSX</li><li class="flex gap-3"><span class="text-accent-foreground bg-accent w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Без регистрации</li></ul><a href="https://chromewebstore.google.com/detail/ya-maps-parser-%E2%80%94-%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80-%D0%BA/aacfjdlinogfkihpmhaagoejofgbnlgd" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[15px] font-semibold rounded-full transition-all duration-200 whitespace-nowrap border border-foreground/20 text-foreground hover:bg-foreground/5">Установить расширение<span aria-hidden="true">→</span></a></div><div class="rounded-2xl bg-foreground text-background p-10 relative overflow-hidden"><div class="absolute top-6 right-6 text-xs font-mono uppercase tracking-widest bg-accent text-accent-foreground px-2.5 py-1 rounded">Pro</div><div class="font-mono text-xs uppercase tracking-widest text-background/60 mb-6">Расширенные лимиты</div><div class="font-display font-bold text-5xl mb-2">от 1 000 ₽</div><div class="text-background/60 mb-8">разовая оплата</div><ul class="space-y-3 text-sm mb-10"><li class="flex gap-3"><span class="bg-accent text-accent-foreground w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>До 10 000 строк за один заход</li><li class="flex gap-3"><span class="bg-accent text-accent-foreground w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Все категории Яндекс Карт</li><li class="flex gap-3"><span class="bg-accent text-accent-foreground w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Приоритетная поддержка в Telegram</li><li class="flex gap-3"><span class="bg-accent text-accent-foreground w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</span>Обновления и новые поля включены</li></ul><a href="https://chromewebstore.google.com/detail/ya-maps-parser-%E2%80%94-%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80-%D0%BA/aacfjdlinogfkihpmhaagoejofgbnlgd" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 text-[15px] font-semibold rounded-full bg-accent text-accent-foreground hover:scale-[1.02] transition">Попробовать бесплатно <span aria-hidden="true">→</span></a></div></div></div></section><section id="faq" class="relative py-24 md:py-32 px-6 bg-card border-t border-border"><div class="max-w-7xl mx-auto"><div class="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-6">06 — Вопросы</div><div class="grid md:grid-cols-12 gap-12"><div class="md:col-span-4"><h2 class="font-display font-bold text-4xl md:text-5xl leading-[1] tracking-tight text-balance">Что обычно спрашивают.</h2><p class="mt-4 text-muted-foreground">Не нашли ответ? Пишите в Telegram-поддержку — отвечаем в течение часа.</p></div><div class="md:col-span-8 divide-y divide-border border-y border-border"><details class="group py-6"><summary class="flex items-center justify-between cursor-pointer list-none"><span class="font-display font-semibold text-xl pr-4">Это безопасно?</span><span class="font-mono text-2xl text-muted-foreground group-open:rotate-45 transition-transform shrink-0">+</span></summary><p class="mt-4 text-muted-foreground leading-relaxed">Да. Расширение работает только на страницах Яндекс Карт и не отправляет ваши данные на сторонние серверы. Парсинг происходит локально в браузере.</p></details><details class="group py-6"><summary class="flex items-center justify-between cursor-pointer list-none"><span class="font-display font-semibold text-xl pr-4">Нужна ли регистрация?</span><span class="font-mono text-2xl text-muted-foreground group-open:rotate-45 transition-transform shrink-0">+</span></summary><p class="mt-4 text-muted-foreground leading-relaxed">Нет. Установили — открыли карты — собираете данные. Демо-доступ доступен сразу.</p></details><details class="group py-6"><summary class="flex items-center justify-between cursor-pointer list-none"><span class="font-display font-semibold text-xl pr-4">Будут ли капчи?</span><span class="font-mono text-2xl text-muted-foreground group-open:rotate-45 transition-transform shrink-0">+</span></summary><p class="mt-4 text-muted-foreground leading-relaxed">Нет. Парсер работает с уже загруженными карточками, не делая отдельных запросов к API карт.</p></details><details class="group py-6"><summary class="flex items-center justify-between cursor-pointer list-none"><span class="font-display font-semibold text-xl pr-4">Сколько стоит расширенный доступ?</span><span class="font-mono text-2xl text-muted-foreground group-open:rotate-45 transition-transform shrink-0">+</span></summary><p class="mt-4 text-muted-foreground leading-relaxed">От 1 000 ₽ — разовая оплата. Тарифы зависят от объёма строк, от 10 000 за раз.</p></details><details class="group py-6"><summary class="flex items-center justify-between cursor-pointer list-none"><span class="font-display font-semibold text-xl pr-4">Какие браузеры поддерживаются?</span><span class="font-mono text-2xl text-muted-foreground group-open:rotate-45 transition-transform shrink-0">+</span></summary><p class="mt-4 text-muted-foreground leading-relaxed">Chrome и все браузеры на основе Chromium: Edge, Brave, Arc, Opera, Яндекс Браузер.</p></details></div></div></div></section><section class="relative py-32 px-6 text-center overflow-hidden"><div class="absolute inset-0 grid-bg grid-bg-fade opacity-50"></div><div class="relative max-w-4xl mx-auto"><h2 class="font-display font-bold text-5xl md:text-7xl leading-[0.95] tracking-tight text-balance">Перестаньте копировать <br/><span class="underline-signal">вручную</span>.</h2><p class="mt-8 text-lg text-muted-foreground max-w-xl mx-auto">Установите расширение в Chrome — соберите первую таблицу за 60 секунд.</p><div class="mt-10 flex flex-wrap items-center justify-center gap-3"><a href="https://chromewebstore.google.com/detail/ya-maps-parser-%E2%80%94-%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80-%D0%BA/aacfjdlinogfkihpmhaagoejofgbnlgd" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[15px] font-semibold rounded-full transition-all duration-200 whitespace-nowrap bg-foreground text-background hover:scale-[1.02] hover:shadow-[0_8px_30px_-8px_var(--ink)]">Попробовать бесплатно<span aria-hidden="true">→</span></a></div></div></section><footer class="border-t border-border py-10 px-6 bg-card"><div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground"><div class="flex items-center gap-2 font-display font-bold text-foreground"><span class="inline-block w-2.5 h-2.5 rounded-sm bg-accent"></span>Ya Maps Parser</div><div class="font-mono text-xs uppercase tracking-widest">© <!-- -->2026<!-- --> · Сделано для тех, кто ценит время</div></div></footer></main><!--/$--><script class="$tsr" id="$tsr-stream-barrier">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-BpgACoxl.js"],assets:$R[5]=[$R[6]={tag:"script",attrs:$R[7]={type:"module",async:!0},children:"import(\"/assets/index-BpgACoxl.js\")"}]},"/":$R[8]={preloads:$R[9]=["/assets/index-NgrRrb23.js"]}}},matches:$R[10]=[$R[11]={i:"__root__ ",u:1778917320377,s:"success",ssr:!0},$R[12]={i:"  ",u:1778917320377,s:"success",ssr:!0}],lastMatchId:"  "})($R["tsr"]);$_TSR.e();document.currentScript.remove()</script><script type="module" async="">import("/assets/index-BpgACoxl.js")</script>
+<aside 
+	id="lovable-badge" 
+	role="complementary"
+	dir="ltr"
+	lang="en"
+	aria-label="Edit with Lovable">
+	<a 
+		id="lovable-badge-cta" 
+		target="_blank" 
+		href="https://lovable.dev/projects/70e971bb-daa0-44c1-85c1-30b3713bddfd?utm_source=lovable-badge"
+		rel="noopener nofollow"
+		aria-label="Edit with Lovable">
+		<span id="lovable-badge-text">Edit with</span>
+		<svg xmlns="http://www.w3.org/2000/svg" width="52" height="16" fill="none" viewBox="0 0 52 16">
+  <path fill="#FCFBF8" fill-rule="evenodd" d="M20.318 5.25c.643 0 1.206.14 1.69.418a2.81 2.81 0 0 1 1.118 1.191c.266.513.4 1.115.4 1.807s-.134 1.296-.4 1.812a2.81 2.81 0 0 1-1.118 1.193c-.484.278-1.047.418-1.69.418s-1.208-.14-1.695-.418a2.85 2.85 0 0 1-1.125-1.193c-.262-.516-.393-1.12-.393-1.812s.131-1.294.393-1.807a2.848 2.848 0 0 1 1.125-1.191c.487-.279 1.052-.418 1.695-.418Zm0 1.425c-.27 0-.504.076-.7.228-.193.147-.34.37-.443.67-.102.295-.153.66-.153 1.093 0 .435.05.801.153 1.1.102.3.25.524.443.676.196.147.43.22.7.22.27 0 .502-.073.694-.22.193-.152.341-.375.443-.67.103-.299.153-.667.153-1.106 0-.65-.112-1.145-.337-1.481a1.08 1.08 0 0 0-.953-.51ZM32.7 5.25c.61 0 1.127.1 1.549.3.422.197.74.48.953.849.217.368.325.809.325 1.32v2.704c0 .29.02.562.062.812.044.245.108.4.19.466V12h-1.935a5.895 5.895 0 0 1-.105-.684 7.745 7.745 0 0 1-.02-.228 2.293 2.293 0 0 1-.151.203c-.205.242-.47.437-.793.584-.32.143-.685.215-1.094.215-.406 0-.77-.08-1.094-.24a1.845 1.845 0 0 1-.756-.682 1.984 1.984 0 0 1-.27-1.045c0-.606.178-1.069.535-1.388.356-.324.87-.534 1.542-.633l1.125-.16c.225-.032.403-.074.534-.123a.622.622 0 0 0 .288-.196.549.549 0 0 0 .093-.327.65.65 0 0 0-.11-.367.702.702 0 0 0-.32-.27c-.14-.07-.31-.105-.51-.105-.32 0-.576.083-.768.251-.193.164-.298.39-.314.676h-1.923c.016-.434.147-.82.393-1.155.25-.34.596-.604 1.039-.792.442-.189.954-.283 1.535-.283Zm.99 3.498a.98.98 0 0 1-.215.14 2.49 2.49 0 0 1-.584.178l-.473.092c-.315.061-.553.156-.713.283-.155.127-.233.305-.233.534 0 .23.084.412.252.547.168.135.383.203.645.203s.494-.058.694-.173c.201-.118.355-.282.461-.49.11-.21.166-.448.166-.714v-.6Zm4.526-2.375c.065-.125.138-.243.221-.349.197-.25.437-.44.719-.571.282-.135.6-.203.952-.203.528 0 .988.138 1.377.412.389.275.688.67.896 1.186.21.512.314 1.12.314 1.824 0 .7-.107 1.309-.32 1.825-.213.512-.518.906-.915 1.18-.393.275-.854.412-1.383.412-.352 0-.667-.062-.946-.184a1.832 1.832 0 0 1-.7-.554 2.2 2.2 0 0 1-.234-.383V12h-1.843V3h1.862v3.373Zm1.284.296c-.274 0-.51.085-.707.253-.192.163-.338.397-.436.7a3.376 3.376 0 0 0-.148 1.05c0 .406.05.759.148 1.058.098.299.243.53.436.694.197.164.433.246.707.246.279 0 .512-.082.7-.246.193-.164.336-.395.43-.694.099-.3.148-.652.148-1.058 0-.405-.05-.757-.147-1.056-.095-.299-.238-.53-.43-.694a1.015 1.015 0 0 0-.7-.253Zm9.416-1.419c.602 0 1.136.131 1.604.393.466.262.829.643 1.086 1.143.263.5.394 1.097.394 1.794 0 .25-.002.449-.006.596H47.51c.018.288.071.538.164.75a1.3 1.3 0 0 0 .491.596c.214.13.465.196.757.196.319 0 .583-.082.792-.246.209-.167.34-.403.393-.706h1.862a2.48 2.48 0 0 1-.485 1.235 2.54 2.54 0 0 1-1.051.805c-.439.188-.949.283-1.53.283-.655 0-1.225-.125-1.708-.375a2.672 2.672 0 0 1-1.13-1.143c-.267-.508-.4-1.137-.4-1.887 0-.712.14-1.327.418-1.843a2.86 2.86 0 0 1 1.155-1.186c.491-.27 1.051-.405 1.678-.405Zm-.044 1.345c-.274 0-.516.068-.725.203a1.29 1.29 0 0 0-.479.59 2.045 2.045 0 0 0-.132.498h2.562a1.873 1.873 0 0 0-.138-.602 1.061 1.061 0 0 0-.418-.516 1.243 1.243 0 0 0-.67-.173Z" clip-rule="evenodd"/>
+  <path fill="#FCFBF8" d="m26.605 9.995 1.342-4.566h1.924L27.628 12h-2.07l-2.33-6.57h1.98l1.397 4.565Zm-13.013.143h2.256c1.632 0 1.421 1.837 1.418 1.861h-5.603V3h1.93v7.138Zm31.516 1.861h-1.862V3h1.862v8.999Z"/>
+  <path fill="url(#a)" fill-rule="evenodd" d="M2.7 3c1.492 0 2.7 1.192 2.7 2.663v1.012h.9c1.49 0 2.7 1.192 2.7 2.662S7.791 12 6.3 12H0V5.663C0 4.193 1.209 3 2.7 3Z" clip-rule="evenodd"/>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(-1.54236 7.07838 -10.231 -2.15602 4.627 5.022)" gradientUnits="userSpaceOnUse">
+      <stop offset=".106" stop-color="#FE7B02"/>
+      <stop offset=".394" stop-color="#FE3F21"/>
+      <stop offset=".608" stop-color="#F858BC"/>
+      <stop offset=".929" stop-color="#575ECF"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+
+	</a>
+	
+	<span id="lovable-badge-divider" aria-hidden="true"></span>
+	
+	<button 
+		id="lovable-badge-close"
+		aria-label="Dismiss"
+		title="Dismiss"
+		type="button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+			<path d="M10.646 4.646a.5.5 0 1 1 .707.708L8.707 8l2.646 2.646a.5.5 0 1 1-.707.707L8 8.707l-2.646 2.646a.5.5 0 1 1-.708-.707L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647Z"/>
+		</svg>
+	</button>
+</aside>
+<script>
+	// Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
+	if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
+		// the page is in an iframe
+		var badge = document.getElementById('lovable-badge');
+		if (badge) {
+			badge.style.display = 'none';
+		}
+	}
+
+	// Add click event listener to close button with animation
+	var closeButton = document.getElementById('lovable-badge-close');
+	if (closeButton) {
+		closeButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			var badge = document.getElementById('lovable-badge');
+			if (badge) {
+				badge.classList.add('closing');
+				setTimeout(function() {
+					if (badge) {
+						badge.style.display = 'none';
+					}
+				}, 240);
+			}
+		});
+	}
+</script>
+</body></html>
